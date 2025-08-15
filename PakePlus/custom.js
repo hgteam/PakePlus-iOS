@@ -4,7 +4,6 @@ console.log(
 )
 
 // very important, if you don't know what it is, don't touch it
-// 非常重要，不懂代码不要动
 const hookClick = (e) => {
     const origin = e.target.closest('a')
     const isBaseTargetBlank = document.querySelector(
@@ -23,4 +22,40 @@ const hookClick = (e) => {
     }
 }
 
+window.open = function (url, target, features) {
+    console.log('open', url, target, features)
+    location.href = url
+}
+
 document.addEventListener('click', hookClick, { capture: true })
+
+// css filter
+document.addEventListener('DOMContentLoaded', () => {
+    const targetNode = document.body
+    // 配置观察选项
+    const config = {
+        childList: true,
+        subtree: true,
+    }
+    const observer = new MutationObserver((mutationsList, observer) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                const element0 = document.querySelector('footer.footer .container-fluid.container-footer');
+                if (element0) {
+                    element0.style.display = 'none';
+                };const element1 = document.querySelector('.float-right.round.position-bottom .float-btn.more-btn[title="安装iOS桌面端"]');
+                if (element1) {
+                    element1.style.display = 'none';
+                };const element2 = document.querySelector('.float-right.round.position-bottom .float-btn.more-btn[title="安装Android桌面端"]');
+                if (element2) {
+                    element2.style.display = 'none';
+                };const element3 = document.querySelector('.float-right.round.position-bottom .float-btn.more-btn[title="安装Windows桌面端"]');
+                if (element3) {
+                    element3.style.display = 'none';
+                }
+            }
+        }
+    })
+    observer.observe(targetNode, config)
+})
+// end css filter
